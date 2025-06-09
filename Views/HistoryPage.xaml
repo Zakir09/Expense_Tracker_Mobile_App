@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.HistoryPage"
+             NavigationPage.HasNavigationBar="False"
+             x:Name="History">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Content -->  
+            <Grid Grid.Row="0" VerticalOptions="FillAndExpand" Padding="20,10" RowDefinitions="auto,*,auto,auto">
+
+                <Label Grid.Row="0" Text="History" FontSize="Body" TextColor="{DynamicResource colorBlack}" 
+                        FontFamily="PoppinsBlack" HorizontalOptions="Center" Opacity=".9" />
+ 
+                <!--History List-->
+                <CollectionView Grid.Row="1" Margin="0,10" ItemsSource="{Binding HistoryList}" SelectionMode="None">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame Padding="0" HasShadow="False" BorderColor="Transparent">
+                                <SwipeView>
+                                    <SwipeView.RightItems>
+                                        <SwipeItems>
+                                            <SwipeItem Text="Edit" BackgroundColor="LightGreen" CommandParameter="{Binding .}"
+                                                   Command="{Binding BindingContext.SwipeCommand, Source={x:Reference Name=History}}" 
+                                                   IsVisible="{Binding BindingContext.CanEdit, Source={x:Reference Name=History}}"/>
+                                            <SwipeItem Text="Delete" BackgroundColor="LightPink" CommandParameter="{Binding .}"
+                                                   Command="{Binding BindingContext.SwipeCommand, Source={x:Reference Name=History}}" 
+                                                   IsVisible="{Binding BindingContext.CanDelete, Source={x:Reference Name=History}}"/>
+                                        </SwipeItems>
+                                    </SwipeView.RightItems>
+                                    <!-- Content -->
+                                    <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="auto,*,auto" ColumnSpacing="10" Margin="10,5">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.OnHistory, Source={x:Reference Name=History}}" 
+                                                                  CommandParameter="{Binding .}" />
+                                        </Grid.GestureRecognizers>
+                                        <Label Grid.Row="0" Grid.ColumnSpan="3"  FontSize="16"  Text="{Binding dateTime, StringFormat='{0:ddMMM}'}" 
+                                               TextColor="{DynamicResource colorGray}" FontFamily="PoppinsBlack"/>
+
+
+                                        <Label Grid.Row="1" Grid.Column="2" FontSize="18" FontFamily="PoppinsBlack"
+                                               Text="{Binding AmountString}" TextColor="{DynamicResource Black}"/>
+
+                                        <Grid Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" HeightRequest="50">
+                                            <Frame HorizontalOptions="Center" BorderColor="Purple" 
+                                                   BackgroundColor="#FBF9F9" CornerRadius="0" Padding="10,5">
+                                                <Frame Margin="10" Padding="0" BackgroundColor="LightGray" CornerRadius="50"
+                                                   VerticalOptions="Center" HorizontalOptions="Center">
+                                                    <Image Source="add_icon.png" WidthRequest="10" />
+                                                </Frame>
+                                            </Frame>
+                                            <Image Source="{Binding PhotoImageSource}" />
+                                        </Grid>
+
+                                        <Label Grid.Row="1" Grid.Column="1" Text="{Binding type}" FontSize="16" 
+                                               TextColor="{DynamicResource colorBlack}" FontAttributes="Bold"/>
+
+                                        <Label Grid.Row="2" Grid.Column="1" Text="{Binding description}" 
+                                               FontSize="15" TextColor="LightGray" FontFamily="PoppinsBlack"/>
+
+                                        <BoxView  Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" 
+                                                  HeightRequest="1" Color="LightGray" />
+                                    </Grid>
+                                </SwipeView>
+                            </Frame> 
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!--Edit Delete Button-->
+                <Button Grid.Row="2" Text="Edit" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                     BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                     TextColor="{DynamicResource colorWhite}" Padding="60,0" Margin="0,10,0,10"
+                        CommandParameter="edit" Command="{Binding OnButtomTab}" />
+                 <Button Grid.Row="3" Text="Delete" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                     BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                     TextColor="{DynamicResource colorWhite}" Padding="50,0" Margin="0,10,0,10"
+                        CommandParameter="delete" Command="{Binding OnButtomTab}" />
+        </Grid>
+ 
+ 
+
+        <!-- Bottom NavBar -->
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" 
+     BackgroundColor="{DynamicResource colorGray2}" Padding="0,5"
+     Margin="{OnPlatform '0,0,0,0', iOS='0,0,0,20'}" 
+     RowDefinitions="auto" ColumnDefinitions="*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="home"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="home.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Home" Margin="0,3,0,0" HorizontalOptions="Center" 
+              HorizontalTextAlignment="Center" 
+              FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="add"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="add.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Add" Margin="0,3,0,0" HorizontalOptions="Center" FontAttributes="Bold"
+              FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+              HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="history"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="history.png" HorizontalOptions="Center" WidthRequest="20"/>
+                <Label Text="History" Margin="0,5,0,0" HorizontalOptions="Center"
+              FontFamily="PoppinsRegular" TextColor="{DynamicResource colorGray}"
+              HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="reminders"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="reminders.png" HorizontalOptions="Center" WidthRequest="30"/>
+                <Label Text="Reminders" Margin="0,-2,0,0" HorizontalOptions="Center"
+              FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+              HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>

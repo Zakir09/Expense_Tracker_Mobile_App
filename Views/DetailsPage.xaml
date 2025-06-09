@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.DetailsPage" 
+             NavigationPage.HasNavigationBar="False">
+
+    <ScrollView>
+        <VerticalStackLayout>
+            <Grid Margin="20" HorizontalOptions="FillAndExpand">
+                <ImageButton Source="go_back.png" WidthRequest="20" Aspect="Center"
+                             HorizontalOptions="Start"  VerticalOptions="Center"
+                             Command="{Binding OnButtonClicked}" CommandParameter="go_back"/> 
+                <Label Text="Transaction Details" FontSize="20" TextColor="{DynamicResource colorBlack}" 
+                        VerticalOptions="Center" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" />
+            </Grid>
+
+            <Grid IsVisible="{Binding ShowExpense}">
+                <Frame HorizontalOptions="Center" BackgroundColor="#F95B51" HasShadow="False"
+                       Opacity=".1" WidthRequest="100" CornerRadius="20" Padding="10,17"/>
+                <Label Text="Expense" HorizontalOptions="Center" Margin="0,5,0,0"
+                       TextColor="#F95B51" FontAttributes="Bold" FontSize="16" />
+            </Grid> 
+            <Grid IsVisible="{Binding HistoryModel.isIncome}">
+                <Frame HorizontalOptions="Center" BackgroundColor="#438883" HasShadow="False"
+                       Opacity=".1" WidthRequest="100" CornerRadius="20" Padding="10,17"/>
+                <Label Text="Income" HorizontalOptions="Center" Margin="0,5,0,0"
+                       TextColor="#83B0AD" FontAttributes="Bold" FontSize="16" />
+            </Grid>
+
+            <Label Text="{Binding HistoryModel.AmountString}" FontSize="28" FontAttributes="Bold"
+                   TextColor="{DynamicResource colorBlack}" FontFamily="" Margin="0,20,0,0"
+                   VerticalOptions="Center" HorizontalOptions="CenterAndExpand" />
+
+            <!--Details-->
+            <Grid Margin="30,10" HorizontalOptions="FillAndExpand"> 
+                <Label Text="Transaction Details" FontSize="20" TextColor="{DynamicResource colorBlack}" 
+                        VerticalOptions="Center" HorizontalOptions="StartAndExpand" FontAttributes="Bold" />
+                <ImageButton Source="open.png" WidthRequest="20"  Aspect="Center"
+                             HorizontalOptions="EndAndExpand"  
+                             Command="{Binding OnButtonClicked}" CommandParameter="open"/>
+            </Grid>
+
+            <Grid RowDefinitions="auto,auto,auto,auto" ColumnDefinitions="*,*" 
+                  HorizontalOptions="Center" ColumnSpacing="40">
+                <Label Grid.Row="0" Grid.Column="0" Text="Status"  
+                       TextColor="LightGray" FontSize="14" FontFamily="PoppinsBlack"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="Expense" IsVisible="{Binding ShowExpense}"
+                       TextColor="#F95B51" FontSize="14" FontAttributes="Bold"/>
+                <Label Grid.Row="0" Grid.Column="1" Text="Income" IsVisible="{Binding HistoryModel.isIncome}"
+                       TextColor="#83B0AD" FontSize="14" FontAttributes="Bold"/>
+
+                <Label Grid.Row="1" Grid.Column="0" Text="Category" IsVisible="{Binding ShowExpense}"
+                       TextColor="LightGray" FontSize="14" FontFamily="PoppinsBlack"/>
+                <Label Grid.Row="1" Grid.Column="1" Text="{Binding HistoryModel.type}"  IsVisible="{Binding ShowExpense}"
+                       TextColor="{DynamicResource colorBlack}" FontSize="14" FontAttributes="Bold"/>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Description" 
+                       TextColor="LightGray" FontSize="14" FontFamily="PoppinsBlack"/>
+                <Label Grid.Row="2" Grid.Column="1" Text="{Binding HistoryModel.description}"  
+                       TextColor="LightGray" FontSize="14" FontAttributes="Bold" LineBreakMode="WordWrap"/>
+                
+                <Label Grid.Row="3" Grid.Column="0" Text="Date"
+                       TextColor="LightGray" FontSize="14" FontFamily="PoppinsBlack"/>
+                <Label Grid.Row="3" Grid.Column="1" Text="{Binding HistoryModel.dateTime, StringFormat='{0:MMM dd, yyyy}'}"  
+                       TextColor="{DynamicResource colorBlack}" FontSize="14" FontAttributes="Bold"/>
+            </Grid>
+
+            <!--Expenses-->
+            <Label Grid.Row="0" Grid.Column="0" Text="Expense receipt images" HorizontalOptions="Center" Margin="0,30"   
+                   TextColor="LightGray" FontSize="16" FontFamily="PoppinsBlack" IsVisible="{Binding ShowExpense}"/>
+
+            <Frame HorizontalOptions="Center" BorderColor="Purple" BackgroundColor="#FBF9F9"
+                   CornerRadius="0" Padding="35,15" IsVisible="{Binding ShowExpense}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtonClicked}" CommandParameter="picture" />
+                </Frame.GestureRecognizers>
+                <Grid>
+                    <Frame Margin="40" Padding="5" BackgroundColor="LightGray" CornerRadius="50">
+                        <Image Source="add_icon.png" WidthRequest="15" />
+                    </Frame>
+                    <Image Source="{Binding PhotoImageSource}" Aspect="AspectFill" HorizontalOptions="FillAndExpand" />
+                </Grid>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+    
+</ContentPage>

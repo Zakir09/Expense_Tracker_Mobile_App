@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExpenseTracker.Views.AddPage"
+             NavigationPage.HasNavigationBar="False">
+ 
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!-- Content -->
+            <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+
+            <VerticalStackLayout VerticalOptions="FillAndExpand" Padding="0,10">
+                <VerticalStackLayout.GestureRecognizers>
+                    <SwipeGestureRecognizer Command="{Binding SwipeCommand}" CommandParameter="Left" Direction="Left" />
+                    <SwipeGestureRecognizer Command="{Binding SwipeCommand}" CommandParameter="Right" Direction="Right" />
+                </VerticalStackLayout.GestureRecognizers>
+
+                
+                <Label Text="Add Transaction" FontSize="Body" TextColor="{DynamicResource colorBlack}" 
+                       FontFamily="PoppinsBlack" HorizontalOptions="Center" Opacity=".9"/>
+
+                <!-- Switch --> 
+                <Frame BackgroundColor="LightGray" HorizontalOptions="CenterAndExpand" 
+                       HeightRequest="40" Margin="20,10" Padding="0" CornerRadius="20">
+                    <StackLayout Orientation="Horizontal">
+                        <Label IsVisible="{Binding ShowIncomeView}" Text="Expense" 
+                               TextColor="{DynamicResource colorBlack}"
+                               Margin="40,0,20,0" FontFamily="PoppinsBlack" FontSize="16"  
+                               VerticalOptions="FillAndExpand" VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonClicked}" 
+                                                      CommandParameter="expense" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Grid>
+                            <Frame BackgroundColor="{DynamicResource colorBlack}" 
+                               HeightRequest="40" Padding="40,0" CornerRadius="20" >
+                                <StackLayout>
+                                    <Label IsVisible="{Binding ShowIncomeView}" Text="Income" 
+                                       FontSize="16" FontFamily="PoppinsBlack" Margin="10,0,0,0"
+                                       TextColor="{DynamicResource colorWhite}"
+                                       VerticalOptions="CenterAndExpand">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OnButtonClicked}" 
+                                                              CommandParameter="expense" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <Label IsVisible="{Binding ShowExpenseView}" Text="Expense"  
+                                       FontSize="16" FontFamily="PoppinsBlack" Margin="0,0,10,0"
+                                       TextColor="{DynamicResource colorWhite}" 
+                                       VerticalOptions="CenterAndExpand">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding OnButtonClicked}" 
+                                                              CommandParameter="income" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                </StackLayout>
+                            </Frame>
+                            <BoxView Color="LightGray" WidthRequest="15"  
+                                     IsVisible="{Binding ShowIncomeView}"
+                                     Margin="0,-10" HorizontalOptions="Start"/>
+                            <BoxView Color="LightGray" WidthRequest="15" 
+                                     IsVisible="{Binding ShowExpenseView}"
+                                     Margin="0,-10" HorizontalOptions="End"/>
+                        </Grid>
+                        <Label IsVisible="{Binding ShowExpenseView}" Text="Income" 
+                               FontFamily="PoppinsBlack" FontSize="16" 
+                               TextColor="{DynamicResource colorBlack}"
+                               Margin="30,0,40,0" VerticalOptions="FillAndExpand" 
+                               VerticalTextAlignment="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonClicked}" 
+                                                      CommandParameter="income" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+                </Frame>
+
+                <!-- Expense Income View --> 
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0" 
+                       IsVisible="{Binding ShowExpenseView}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer  Command="{Binding PickerCommand}" CommandParameter="{x:Reference pType}"/>
+                    </Frame.GestureRecognizers>
+                    <Grid VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                        <Picker x:Name="pType" ItemsSource="{Binding TypeList}" SelectedItem="{Binding SelectedType}" FontFamily="PoppinsBlack"
+                                TextColor="{DynamicResource colorBlack}" FontSize="17" HorizontalOptions="FillAndExpand"/>
+                        <Image Source="dropdown.png" HorizontalOptions="EndAndExpand" WidthRequest="15" Margin="5,0" />
+                    </Grid>
+                </Frame>
+ 
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                    <Grid VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                        <Image Source="calender.png" HorizontalOptions="EndAndExpand" WidthRequest="25" />
+                        <DatePicker Date="{Binding SelectedDate, StringFormat='{0:dd/MM/yyyy}'}" 
+                                    HorizontalOptions="FillAndExpand"  TextColor="{DynamicResource colorBlack}"
+                                    FontFamily="PoppinsBlack" FontSize="17" VerticalOptions="Center" />
+                    </Grid>
+                </Frame>
+
+
+
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                    <Entry Placeholder="Description" HorizontalOptions="FillAndExpand" 
+                           Text="{Binding Description}" FontAttributes="Bold" FontSize="16" PlaceholderColor="Gray" />
+                </Frame>
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                    <Entry Placeholder="Total" HorizontalOptions="FillAndExpand" Keyboard="Numeric"
+                            Text="{Binding Total}" FontAttributes="Bold" FontSize="16" PlaceholderColor="Gray"/>
+                </Frame>
+
+                <Label Text="Expense receipt images &#x0a;(Optional)" HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" Margin="0,20" TextColor="LightGray" 
+                       FontFamily="PoppinsBlack" FontSize="18" IsVisible="{Binding ShowExpenseView}"/>
+
+                <Frame HorizontalOptions="Center" BorderColor="Purple" BackgroundColor="#FBF9F9"
+                       CornerRadius="0" Padding="35,15" IsVisible="{Binding ShowExpenseView}">
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OnButtonClicked}" CommandParameter="picture" />
+                    </Frame.GestureRecognizers>
+                    <Grid>
+                        <Frame Margin="30" Padding="5" BackgroundColor="LightGray" CornerRadius="50">
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OnButtonClicked}" CommandParameter="picture" />
+                            </Frame.GestureRecognizers>
+                            <Image Source="add_icon.png" WidthRequest="15" />
+                        </Frame>
+                        <Image Source="{Binding PhotoImageSource}" Aspect="AspectFill" HorizontalOptions="FillAndExpand"/>
+                    </Grid>
+                </Frame>
+                <Button Text="Record Description" 
+                        Command="{Binding RecordSpeechCommand}" 
+                        HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                        BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                        TextColor="{DynamicResource colorWhite}" Padding="60,0" Margin="0,20" />
+
+                <Button Text="Save" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                        BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                        TextColor="{DynamicResource colorWhite}" Padding="60,0" Margin="0,20" 
+                        Command="{Binding OnButtonClicked}" CommandParameter="save"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Bottom NavBar -->
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" 
+                BackgroundColor="{DynamicResource colorGray2}" Padding="0,5"
+                Margin="{OnPlatform '0,0,0,0', iOS='0,0,0,20'}" 
+                RowDefinitions="auto" ColumnDefinitions="*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="home"/>
+                </VerticalStackLayout.GestureRecognizers>
+            <Image Source="home.png" HorizontalOptions="Center" WidthRequest="25"/>
+            <Label Text="Home" Margin="0,3,0,0" HorizontalOptions="Center" 
+                HorizontalTextAlignment="Center" 
+                FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="add"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="add.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Add" Margin="0,3,0,0" HorizontalOptions="Center" FontAttributes="Bold"
+                FontFamily="PoppinsRegular" TextColor="{DynamicResource colorGray}"
+                HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="history"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="history.png" HorizontalOptions="Center" WidthRequest="20"/>
+                <Label Text="History" Margin="0,5,0,0" HorizontalOptions="Center"
+                FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="reminders"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="reminders.png" HorizontalOptions="Center" WidthRequest="30"/>
+                <Label Text="Reminders" Margin="0,-2,0,0" HorizontalOptions="Center"
+                FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+        </Grid>
+        <!-- Listening Overlay -->
+        <Grid x:Name="ListeningOverlay" IsVisible="{Binding IsListening}" BackgroundColor="#C0000000" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <Frame VerticalOptions="Center" HorizontalOptions="Center" Padding="20,40" CornerRadius="10" BackgroundColor="White">
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                    <Label Text="Listening..." HorizontalTextAlignment="Center" FontAttributes="Bold" FontSize="Medium"/>
+                    <ActivityIndicator IsRunning="True" Color="DarkBlue"/>
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
+
+
+    </Grid> 
+    
+</ContentPage>

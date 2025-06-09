@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:customViews="clr-namespace:ExpenseTracker.CustomViews"
+             NavigationPage.HasNavigationBar="False" 
+             x:Class="ExpenseTracker.Views.MainPage">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="0" VerticalScrollBarVisibility="Never">
+            <VerticalStackLayout VerticalOptions="FillAndExpand" Padding="0,10">
+
+                <Label Text="Home" FontSize="Body" TextColor="{DynamicResource colorBlack}"      
+                       FontFamily="PoppinsBlack" HorizontalOptions="Center" Opacity=".9"/>
+
+                <Label Text="Total Balance" FontSize="18" TextColor="{DynamicResource colorBlack}" 
+                        FontFamily="PoppinsRegular" HorizontalOptions="Center" Margin="0,10,0,-5"/>
+                <Label Text="{Binding TotalBalance}" FontSize="35" TextColor="{DynamicResource colorBlack}"      
+                        FontFamily="PoppinsBlack" HorizontalOptions="Center" />
+
+                <Grid Margin="0,0,0,40">
+                    <customViews:CircularProgressBar Budget="{Binding Budget}" BudgetColor="#90BF54" 
+                                                     Progress="{Binding Progress}" ProgressColor="Black" 
+                                                     TextColor="Black" ProgressLeftColor="LightGray"
+                                                     Size="200"  Thickness="15" Margin="0,10,0,0"/>
+                    <Label Text="Spent" VerticalOptions="EndAndExpand" HorizontalOptions="Center"
+                           Margin="0,0,0,48" FontSize="20" TextColor="Black"/>
+                </Grid>
+
+                <Grid RowDefinitions="auto,auto,auto,auto,auto" ColumnDefinitions="*,*">
+                    <Label Grid.Row="0" Grid.Column="0" Text="AVAILABLE" FontFamily="PoppinsBlack"
+                           TextColor="{DynamicResource colorBlack}" FontSize="16" 
+                           HorizontalOptions="Center" Opacity=".8"/>
+                    <Label Grid.Row="1" Grid.Column="0" Text="{Binding Available}" 
+                           TextColor="{DynamicResource colorGray}" FontAttributes="Bold" 
+                           FontSize="24" HorizontalOptions="Center"/>
+
+                    <Label Grid.Row="0" Grid.Column="1" Text="SPENT" FontFamily="PoppinsBlack"
+                           TextColor="{DynamicResource colorBlack}" FontSize="16" 
+                           HorizontalOptions="Center" Opacity=".8"/>
+                    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Spent}" 
+                           TextColor="{DynamicResource colorGray}" FontAttributes="Bold" 
+                           FontSize="24" HorizontalOptions="Center"/>
+
+                    <Label Grid.Row="2" Margin="0,5"/>
+
+                    <Label Grid.Row="3" Grid.ColumnSpan="2" Text="CURRENT BUDGET" 
+                           TextColor="{DynamicResource colorBlack}" FontSize="16" Opacity=".8"
+                           HorizontalOptions="Center" FontFamily="PoppinsBlack"/>
+                    <Label Grid.Row="4" Grid.ColumnSpan="2" Text="{Binding CurrentBudget}" 
+                           TextColor="{DynamicResource colorGray}" FontAttributes="Bold" 
+                           FontSize="24" HorizontalOptions="Center"/>
+                </Grid>
+                
+                <Button Text="Edit" HorizontalOptions="Center" Margin="0,20,0,0" HeightRequest="35"
+                        BackgroundColor="{DynamicResource colorBlack}" CornerRadius="30" FontSize="16"
+                        TextColor="{DynamicResource colorWhite}" Padding="40,0" FontAttributes="Bold" 
+                        Command="{Binding OnButtomTab}" CommandParameter="edit"/>
+
+            </VerticalStackLayout>
+        </ScrollView>
+ 
+        <!-- Bottom NavBar --> 
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" 
+              BackgroundColor="{DynamicResource colorGray2}" Padding="0,5"
+              Margin="{OnPlatform '0,0,0,0', iOS='0,0,0,20'}" 
+              RowDefinitions="auto" ColumnDefinitions="*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="home"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="home.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Home" Margin="0,3,0,0" HorizontalOptions="Center" 
+                       HorizontalTextAlignment="Center" 
+                       FontFamily="PoppinsRegular" TextColor="{DynamicResource colorGray}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="add"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="add.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Add" Margin="0,3,0,0" HorizontalOptions="Center" FontAttributes="Bold"
+                       FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                       HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="history"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="history.png" HorizontalOptions="Center" WidthRequest="20"/>
+                <Label Text="History" Margin="0,5,0,0" HorizontalOptions="Center"
+                       FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                       HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="reminders"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="reminders.png" HorizontalOptions="Center" WidthRequest="30"/>
+                <Label Text="Reminders" Margin="0,-2,0,0" HorizontalOptions="Center"
+                       FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                       HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout> 
+        </Grid>
+        
+    </Grid>
+    
+</ContentPage>

@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             x:Class="ExpenseTracker.Views.RemindersPage"
+             NavigationPage.HasNavigationBar="False" 
+             x:Name="Reminders">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Content -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <VerticalStackLayout Grid.Row="0" Padding="20,10">
+
+
+            <Label Text="Notifications" FontSize="Body" TextColor="{DynamicResource colorBlack}" 
+                     FontFamily="PoppinsBlack" HorizontalOptions="Center" Opacity=".9"/>
+
+            
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                    <Grid VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                        <Image Source="calender.png" HorizontalOptions="EndAndExpand" WidthRequest="25" />
+                        <DatePicker Date="{Binding SelectedDate, StringFormat='{0:dd/MM/yyyy}'}" 
+                     HorizontalOptions="FillAndExpand"  TextColor="{DynamicResource colorBlack}"
+                     FontFamily="PoppinsBlack" FontSize="17" VerticalOptions="Center" />
+                    </Grid>
+                </Frame>
+
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0" IsVisible="{Binding ShowExpenseView}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer  Command="{Binding PickerCommand}" CommandParameter="{x:Reference pType}"/>
+                </Frame.GestureRecognizers>
+                <Grid VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                    <Picker x:Name="pType" ItemsSource="{Binding TypeList}" SelectedItem="{Binding SelectedType}" FontFamily="PoppinsBlack"
+                 TextColor="{DynamicResource colorBlack}" FontSize="17" HorizontalOptions="FillAndExpand" />
+                    <Image Source="dropdown.png" HorizontalOptions="EndAndExpand" WidthRequest="15" Margin="5,0" />
+                </Grid>
+            </Frame>
+
+            <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                <Entry Placeholder="Description" HorizontalOptions="FillAndExpand" 
+                         FontAttributes="Bold" FontSize="16" PlaceholderColor="Gray" Text="{Binding Description}"/>
+            </Frame>
+   
+                <Frame BackgroundColor="LightGray" CornerRadius="18" Margin="10" Padding="25,0">
+                    <Grid VerticalOptions="Center" HorizontalOptions="FillAndExpand">
+                        <Image Source="alarm.png" HorizontalOptions="EndAndExpand" WidthRequest="25" />
+                        <TimePicker Time="{Binding SelectedTime, StringFormat='{0:hh:mm tt}'}" 
+                     HorizontalOptions="FillAndExpand"  TextColor="{DynamicResource colorBlack}"
+                     FontFamily="PoppinsBlack" FontSize="17" VerticalOptions="Center" />
+                    </Grid>
+                </Frame>
+                 
+                <Button Text="Save" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                      BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                      TextColor="{DynamicResource colorWhite}" Padding="60,0" Margin="0,10,0,20" 
+                     Command="{Binding OnButtomTab}" CommandParameter="save"/> 
+            </VerticalStackLayout>
+
+            <!--Notification List-->
+            <Grid Grid.Row="1" VerticalOptions="FillAndExpand" Padding="20,0" RowDefinitions="auto,*,auto,auto">
+                <Label Text="Current Notifications" HorizontalOptions="Center" FontSize="19" Grid.Row="0"/>
+                <CollectionView Margin="0,10" ItemsSource="{Binding NotList}" Grid.Row="1">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Edit" BackgroundColor="LightGreen" CommandParameter="{Binding .}"
+                                                   Command="{Binding BindingContext.SwipeCommand, Source={x:Reference Name=Reminders}}" 
+                                                   IsVisible="{Binding BindingContext.CanEdit, Source={x:Reference Name=Reminders}}"/>
+                                        <SwipeItem Text="Delete" BackgroundColor="LightPink" CommandParameter="{Binding .}"
+                                                   Command="{Binding BindingContext.SwipeCommand, Source={x:Reference Name=Reminders}}" 
+                                                   IsVisible="{Binding BindingContext.CanDelete, Source={x:Reference Name=Reminders}}"/>
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <!-- Content -->
+                                <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,*,auto" ColumnSpacing="10" Margin="10,5">
+                                    <Image Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" Source="alarm2.png"/>
+
+                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding type}" FontSize="16" 
+                                           TextColor="LightGray" FontFamily="PoppinsBlack"/>
+                                    <Label Grid.Row="1" Grid.Column="1"  FontSize="13"
+                                           Text="{Binding dateTime, StringFormat='{0:dd/MM/yyyy}'}" 
+                                           TextColor="{DynamicResource colorBlack}" FontFamily="PoppinsBlack"/>
+                                    <Label Grid.Row="2" Grid.Column="1" Text="{Binding description}" 
+                                           FontSize="13" TextColor="{DynamicResource colorBlack}" 
+                                           FontFamily="PoppinsBlack"/>
+
+                                    <Label Grid.Row="0" Grid.Column="2" FontSize="13" FontFamily="PoppinsBlack"
+                                           Text="{Binding dateTime, StringFormat='{0:hh:mm tt}'}"
+                                           TextColor="{DynamicResource colorBlack}" Margin="0,0,10,0"/>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!--Edit Delete Button-->
+                <Button Text="Edit" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                        BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                        TextColor="{DynamicResource colorWhite}" Padding="60,0" Margin="0,10,0,10" 
+                        CommandParameter="edit" Command="{Binding OnButtomTab}" Grid.Row="2"/>
+                <Button Text="Delete" HorizontalOptions="Center" CornerRadius="30" FontSize="16"
+                        BackgroundColor="{DynamicResource colorBlack}" FontAttributes="Bold"
+                        TextColor="{DynamicResource colorWhite}" Padding="50,0" Margin="0,10,0,10"
+                        CommandParameter="delete" Command="{Binding OnButtomTab}" Grid.Row="3" />
+            </Grid>
+        </Grid>
+ 
+        <!-- Bottom NavBar -->
+        <Grid Grid.Row="1" HorizontalOptions="FillAndExpand" VerticalOptions="End" 
+        BackgroundColor="{DynamicResource colorGray2}" Padding="0,5"
+        Margin="{OnPlatform '0,0,0,0', iOS='0,0,0,20'}" 
+        RowDefinitions="auto" ColumnDefinitions="*,*,*,*">
+
+            <VerticalStackLayout Grid.Column="0" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="home"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="home.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Home" Margin="0,3,0,0" HorizontalOptions="Center" 
+                 HorizontalTextAlignment="Center" 
+                 FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="add"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="add.png" HorizontalOptions="Center" WidthRequest="25"/>
+                <Label Text="Add" Margin="0,3,0,0" HorizontalOptions="Center" FontAttributes="Bold"
+                 FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                 HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="history"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="history.png" HorizontalOptions="Center" WidthRequest="20"/>
+                <Label Text="History" Margin="0,5,0,0" HorizontalOptions="Center"
+                 FontFamily="PoppinsRegular" TextColor="{DynamicResource Black}"
+                 HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" VerticalOptions="FillAndExpand">
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding OnButtomTab}" CommandParameter="reminders"/>
+                </VerticalStackLayout.GestureRecognizers>
+                <Image Source="reminders.png" HorizontalOptions="Center" WidthRequest="30"/>
+                <Label Text="Reminders" Margin="0,-2,0,0" HorizontalOptions="Center"
+                 FontFamily="PoppinsRegular" TextColor="{DynamicResource colorGray}"
+                 HorizontalTextAlignment="Center" VerticalOptions="EndAndExpand"/>
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
