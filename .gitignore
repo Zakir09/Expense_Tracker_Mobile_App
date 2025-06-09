@@ -1,0 +1,40 @@
+# Build
+bin/
+obj/
+
+# VS Code & VS
+.vscode/
+.vs/
+*.user
+*.suo
+*.cache
+*.log
+*.pdb
+*.db
+*.db-shm
+*.db-wal
+
+# MAUI/Android/iOS
+platforms/ios/Pods/
+*.apk
+*.aab
+
+# Temporary files
+*.tmp
+*.bak
+*.backup
+*.orig
+
+# Index/cache
+*.vsidx
+*.dtbcache.*
+*.futdcache.*
+*.wsuo
+*.bin
+*.sqlite
+*.metadata.*
+*.projects.*
+
+# Others
+*.DS_Store
+*.swp
