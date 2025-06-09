@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIDeviceFamily</key>
+	<array>
+		<integer>1</integer>
+		<integer>2</integer>
+	</array>
+	<key>UIRequiredDeviceCapabilities</key>
+	<array>
+		<string>arm64</string>
+	</array>
+	<key>UISupportedInterfaceOrientations</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>UISupportedInterfaceOrientations~ipad</key>
+	<array>
+		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
+		<string>UIInterfaceOrientationLandscapeLeft</string>
+		<string>UIInterfaceOrientationLandscapeRight</string>
+	</array>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/appicon.appiconset</string>
+    <!-- Location permission -->
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need access to your location to provide location-based services.</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>We need access to your location to provide location-based services.</string> 
+
+	<key>UIUserInterfaceStyle</key> <!-- For light mode only -->
+	<string>Light</string>
+	<!-- Camera permission -->
+    <key>NSCameraUsageDescription</key>
+    <string>We need access to your camera to capture photos.</string>
+	<!-- Microphone permission -->
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This application requires microphone access to convert speech to text.</string>
+	 <!-- File access permissions -->
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>We need access to your photo library to save and retrieve photos.</string>
+    <key>NSCameraRollUsageDescription</key>
+    <string>We need access to your camera roll to save and retrieve photos.</string>
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>We need access to your documents folder to save and retrieve files.</string>
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>We need access to your downloads folder to save and retrieve files.</string>
+    <key>NSFileProviderDomainUsageDescription</key>
+    <string>We need access to your files for app functionality.</string>
+    <!-- Internet permission -->
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+	    <!-- Notification permission -->
+<key>UIBackgroundModes</key>
+<array>
+    <string>fetch</string>
+    <string>remote-notification</string>
+</array>
+</dict>
+</plist>
