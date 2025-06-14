@@ -1,5 +1,7 @@
 # Project: Mobile Expense Tracker App
 
+<img src="assets/banner.gif" alt="banner" width="600">
+
 ## Table of Contents
 
 - [Overview](#overview)
