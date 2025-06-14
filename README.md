@@ -6,7 +6,7 @@
 - [Features](#features)
 - [Live Demo](#live-demo)
 - [Technologies Used](#technologies-used)
-- [Getting Started](#getting-started)
+- [Explore the Code](#explore-code)
 
 ---
 
@@ -42,6 +42,22 @@ https://github.com/user-attachments/assets/d5643643-ce69-4088-8788-f8623f110dbc
 
 <h2 id="technologies-used">Technologies Used</h2>
 
+The app was developed using a range of tools and frameworks aimed at creating a smooth cross-platform mobile experience:
+
+- **.NET MAUI** – The main framework used to build the app for Android, iOS, and other platforms from a single codebase.
+- **C#** – Primary programming language used for backend logic and app functionality.
+- **XAML** – Used to design and structure the UI pages and layout components.
+- **Visual Studio** – Main development environment used for coding, testing, and debugging.
+- **MVVM Architecture** – For clean separation of concerns, with ViewModels handling logic and data binding to views.
+- **Figma** – Used for creating wireframes and designing the app’s user interface before development.
+- **Microsoft Cognitive Services Speech SDK** – Used for speech-to-text functionality, enabling users to enter transaction descriptions using voice input.
+- **MAUI Essentials: Camera & Media Picker APIs** – Used to capture or upload receipt images and attach them to transactions.
+- **Plugin.LocalNotification** – Enables local notifications for budget alerts and reminders.
+- **Permissions Plugin** – Handles runtime permissions for microphone, camera, and storage access.
+- **Newtonsoft.Json** – For serialising and storing transaction data locally.
+
 ---
 
-<h2 id="getting-started">Getting Started</h2>
+<h2 id="explore-code">Explore the Code</h2>
+
+This app was built using .NET MAUI, C#, and XAML with MVVM architecture. While it’s not actively maintained, you’re welcome to browse the source code or fork it for your own learning and experimentation.
